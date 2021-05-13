@@ -2,16 +2,16 @@ import kotlinx.coroutines.*
 
 @OptIn(ObsoleteCoroutinesApi::class)
 fun main() = runBlocking<Unit> {
-    launch { // context of the parent, main runBlocking coroutine
+    launch {
         println("main runBlocking      : I'm working in thread ${Thread.currentThread().name}")
     }
-    launch(Dispatchers.Unconfined) { // not confined -- will work with main thread
+    launch(Dispatchers.Unconfined) {  // << put breakpoint here
         println("Unconfined            : I'm working in thread ${Thread.currentThread().name}")
     }
-    launch(Dispatchers.Default) { // will get dispatched to DefaultDispatcher
+    launch(Dispatchers.Default) {
         println("Default               : I'm working in thread ${Thread.currentThread().name}")
     }
-    launch(newSingleThreadContext("MyOwnThread")) { // will get its own new thread
+    launch(newSingleThreadContext("MyOwnThread")) {
         println("newSingleThreadContext: I'm working in thread ${Thread.currentThread().name}")
     }
 }
